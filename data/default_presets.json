@@ -1,0 +1,28 @@
+[
+	{
+		"name" : "standard",
+		"description" : "The standard quickstart setup. The 'Heretic' role can be assigned to users in order to prevent all Mekhane-related action in an emergency.",
+		"roles" : [
+		{
+				"name" : "Administrator",
+				"permissions" : {
+					"INTERACT" : "GRANT",
+					"MANAGE" : "GRANT"
+				}
+			},
+			{
+				"name" : "Heretic",
+				"permissions" : {
+					"INTERACT" : "DENY",
+					"MANAGE" : "DENY"
+				}
+			},
+			{
+				"name" : "*",
+				"permissions" : {
+					"INTERACT" : "GRANT"
+				}
+			}
+		]
+	}
+]

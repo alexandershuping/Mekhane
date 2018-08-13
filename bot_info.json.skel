@@ -1,0 +1,5 @@
+{
+	"command_prefix" : "m|",
+	"description" : "Mekhane, a bot that does things",
+	"token" : "INSERT YOUR BOT TOKEN HERE!"
+}
