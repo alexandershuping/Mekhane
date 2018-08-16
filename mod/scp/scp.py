@@ -44,13 +44,13 @@ class SCP:
 	
 	@commands.command()
 	async def lc(self, ctx, count=3, update=False):
-		''' Lists recently-created entries (max 30) '''
-		if count > 30:
-			msg = await ctx.say('I will not pull more than 30 entries at once.')
+		''' Lists recently-created entries (max 29) '''
+		if count >= 30:
+			msg = await ctx.send('I will not pull more than 29 entries at once.')
 			await track(msg, ctx.author)
 			return
 		elif count <= 0:
-			msg = await ctx.say('{0} is not a valid number of entries.'.format(count))
+			msg = await ctx.send('{0} is not a valid number of entries.'.format(count))
 			await track(msg, ctx.author)
 			return
 		
