@@ -228,7 +228,7 @@ class Permissions:
 	@perms.command(name='listpresets')
 	async def list_presets(self, ctx):
 		''' Provides a list of permission quick-setup presets. '''
-		embed = discord.Embed(title='\u2139 Preset list', description='The following default permission schemes are available. Select with ``{0}perms preset <name>``, and customize with ``{0}perms grant``, ``{0}perms deny``, and ``{0}perms clear``.'.format(self.bot.command_prefix), colour=discord.Colour(0x419492))
+		embed = discord.Embed(title='\u2139 Preset list', description='The following default permission schemes are available. Select with ``{0}perms preset <name>``, and customize with ``{0}perms grant``, ``{0}perms deny``, and ``{0}perms clear``.'.format(self.bot.command_prefix), colour=discord.Colour(self.bot.embed_colour))
 
 		presets = None
 		with open('data/default_presets.json') as preset_file:
@@ -307,7 +307,7 @@ class Permissions:
 					cur.execute('INSERT INTO permissions (guild_id, role_id, permissions) VALUES (?,?,?);', (ctx.guild.id, ctx.guild.default_role.id, perm_val))
 			else:
 				if not 'color' in role.keys():
-					role['color'] = 0x419492
+					role['color'] = self.bot.embed_colour
 				new_role = await ctx.guild.create_role(name=role['name'],colour=discord.Colour(role['color']),mentionable=True,reason='Setting up permissions from preset (requesting user: {0})'.format(ctx.message.author))
 				with sql_cur(self.db) as cur:
 					cur.execute('INSERT INTO permissions (guild_id, role_id, permissions) VALUES (?,?,?);', (ctx.guild.id, new_role.id, perm_val))
@@ -321,7 +321,7 @@ class Permissions:
 			user = ctx.message.author
 		perms = await get_permissions(user, ctx.guild)
 
-		embed = discord.Embed(title='Permissions for {0}:'.format(user), description='Calculated from {0}\'s roles.'.format(user.name), colour=discord.Colour(0x419492))
+		embed = discord.Embed(title='Permissions for {0}:'.format(user), description='Calculated from {0}\'s roles.'.format(user.name), colour=discord.Colour(self.bot.embed_colour))
 		embed.set_thumbnail(url=user.avatar_url)
 		embed.set_footer(text='Permission bytes: 0b{0:016b}.'.format(perms))
 

@@ -70,12 +70,8 @@
 				"type" : "BIGINT"
 			},
 			{
-				"name" : "inactive_category",
+				"name" : "scp_channel_id",
 				"type" : "BIGINT"
-			},
-			{
-				"name" : "region_open_mode",
-				"type" : "INTEGER"
 			}
 		]
 	},

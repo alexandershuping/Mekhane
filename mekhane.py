@@ -49,7 +49,7 @@ class Mekhane_Core:
 	
 	def _construct_error_embed(self, command_name, error_name, error_text, full_command_string, full_backtrace=None):
 		title = "⚠ An error was encountered while processing the {0} command".format(command_name)
-		embed = discord.Embed(title=title, colour=discord.Colour(0x913232), description="**{0}**: ```{1}```".format(error_name, str(error_text)))
+		embed = discord.Embed(title=title, colour=discord.Colour(self.bot.embed_colour), description="**{0}**: ```{1}```".format(error_name, str(error_text)))
 		embed.set_footer(text="Report bugs at https://github.com/alexandershuping/mekhane")
 		embed.add_field(name="While processing the command:", value="``{0}``".format(full_command_string), inline=False)
 		if full_backtrace:
@@ -70,7 +70,7 @@ class Mekhane_Core:
 				
 	def _construct_unknown_command_embed(self, error_text, full_text):
 		title = "❓ Invalid command."
-		embed = discord.Embed(title=title, colour=discord.Colour(0x913232), description='```{0}```'.format(error_text))
+		embed = discord.Embed(title=title, colour=discord.Colour(self.bot.embed_colour), description='```{0}```'.format(error_text))
 		embed.set_footer(text="Use {0}help for a list of commands.".format(self.bot.command_prefix))
 		embed.add_field(name="While processing the command:", value="``{0}``".format(full_text), inline=False)
 
@@ -79,7 +79,7 @@ class Mekhane_Core:
 	async def on_command_error(self, ctx, error):
 		if type(error) == discord.ext.commands.MissingPermissions:
 			await ctx.message.add_reaction('⛔')
-			embed = discord.Embed(title='⛔ Insufficient Permissions', colour=discord.Colour(0x913232), description="You are not permitted to run the command ``{0}``".format(ctx.message.content))
+			embed = discord.Embed(title='⛔ Insufficient Permissions', colour=discord.Colour(self.bot.embed_colour), description="You are not permitted to run the command ``{0}``".format(ctx.message.content))
 			embed.add_field(name="Reason:", value=str(error))
 			msg = await ctx.send(content='', embed=embed)
 			await track(msg, ctx.author)
@@ -183,7 +183,7 @@ class Mekhane_Core:
 		''' Return a URL to invite Mekhane to your server. '''
 		global bot_url
 		processed_url = bot_url.format(self.bot.user.id)
-		embed = discord.Embed(title="Click here to invite {0} to your server.".format(self.bot.user), colour=discord.Colour(0x419492), url=processed_url)
+		embed = discord.Embed(title="Click here to invite {0} to your server.".format(self.bot.user), colour=discord.Colour(self.bot.embed_colour), url=processed_url)
 		embed.set_author(name=str(self.bot.user), url=processed_url, icon_url=self.bot.user.avatar_url)
 		embed.set_footer(text=processed_url)
 
@@ -194,9 +194,11 @@ class Mekhane_Core:
 global_db_hook = sql_con()
 
 mekhane = commands.Bot(command_prefix=bot_prefix, description=bot_desc)
+mekhane.embed_colour = 0x9030d0
 mekhane.add_cog(Mekhane_Core(mekhane, global_db_hook))
 mekhane.load_extension('permissions')
 mekhane.load_extension('mod.wan.wan')
+mekhane.load_extension('mod.scp.scp')
 #mekhane.load_extension('mod.rp.rp')
 
 @mekhane.check
