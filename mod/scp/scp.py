@@ -39,6 +39,9 @@ class SCP:
 		if self.lc_list:
 			for item in self.lc_list['items']:
 				old_lc_links.append(item['link'])
+		else:
+			self.lc_list = new_lc_list
+			return
 
 		announce = True
 		for dex, item in enumerate(new_lc_list['items']):
